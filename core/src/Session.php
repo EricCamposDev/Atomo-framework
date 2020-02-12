@@ -17,9 +17,13 @@
 		private $datelog;
 		private $auth;
 
+		public function __construct(){
+			parent::__construct();
+		}
+
 		public function auth( $name ) {
 
-			@session_start();
+			session_start();
 			$this->authname = $name;
 
 			if( isset($_SESSION[md5($this->authname)]) ){
@@ -43,12 +47,15 @@
 		}
 
 		public function get( $name ){
-			@session_start();
-			return (object) $_SESSION[md5($name)];
+			if( $this->auth($name) ){
+				return (object) $_SESSION[md5($name)];
+			}else{
+				return false;
+			}
 		}
 
 		public function end($name = null){
-			@session_start();
+			$this->auth();
 			if( $name != null ){
 				unset($_SESSION[$name]);
 			}else{
@@ -57,7 +64,6 @@
 		}
 
 		public function build(){
-			@session_start();
 			$_SESSION[md5($this->authname)] = $this->data;
 		}
 
