@@ -35,9 +35,7 @@
 			foreach($_allModules as $md){
 				$defineModule = file_get_contents(parent::route('path') . "/modules/" . $md . "/define.json");
 				$mod = json_decode($defineModule, true);
-				if( $mod["visibility"] != "private" ){
-					$allModules[$md] = $mod;
-				}
+				$allModules[$md] = $mod;
 			}
 
 			return $allModules;

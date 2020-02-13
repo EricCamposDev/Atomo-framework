@@ -52,13 +52,18 @@
 			}
 		}
 
-		protected function getConfig( $key ){
-			
+		public function getConfig( $key = null ){
 			$return = (array) $this->config;
-			if( isset( $return[$key] ) ){
-				return $return[$key];
+			if( $key != null ){
+
+				
+				if( isset( $return[$key] ) ){
+					return $return[$key];
+				}else{
+					return false;
+				}
 			}else{
-				return false;
+				return $return;
 			}
 
 		}
@@ -143,6 +148,21 @@
 			
 		}
 
+		public function scanDir($dir){
+			$response = [];
+			$path = $this->route('path')."/".$dir;
+			if( file_exists($path) and is_dir($path) ){
+				$dirFiles = dir($path);
+				while( $file = $dirFiles->read() ){
+					if( $file != "." and $file != ".." ){
+						$response[] = $file;
+					}
+				}
+			}
+
+			return $response;
+		}
+
 		public function getModels($module = null){
 
 			if( $module == null ){
@@ -161,7 +181,6 @@
 				}
 			}
 		}
-
 
 
 		public function run( $fileApp ){
