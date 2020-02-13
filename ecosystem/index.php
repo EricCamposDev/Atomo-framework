@@ -59,7 +59,7 @@
               <div class="modal fade" id="importModule" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form action="core/new-module.php" method="post" enctype="multipart/form-data">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Importar Modulo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -69,30 +69,39 @@
                       <div class="modal-body">
                         <div class="form-group">
                           <label>Modulo(.zip)</label>
-                          <input type="file" class="form-control" name="" required />
+                          <input type="file" class="form-control" name="file_module" required />
                           <small>O modulo padrão(esqueleto) pode ser baixado no repositório oficial no <b><a target="_blank" href="https://github.com/EricCamposDev/AF-default-module">github</b></a></small>
                         </div>
 
                         <div class="form-group">
                           <label>Nome</label>
-                          <input type="text" class="form-control" name=""  required />
+                          <input type="text" class="form-control" name="name" required />
                         </div>
 
                         <div class="form-group">
                           <label>Versão</label>
-                          <input type="text" class="form-control" name=""  required />
+                          <input type="text" class="form-control" name="version" required />
                         </div>
 
                         <div class="form-group">
                           <label>base de Aplicação</label>
-                          <input type="text" class="form-control" name=""  required />
+                          <input type="text" class="form-control" name="base" required />
                         </div>
 
                         <div class="form-group">
                           <label>Encapsulamento</label>
-                          <select class="form-control" name=""  required>
+                          <select class="form-control" name="visibility" required>
                             <option value="public">Publico</option>
                             <option value="private">Privado</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group">
+                          <label>Status</label>
+                          <select class="form-control" name="status" required>
+                            <option value="building">em desenvolvimento</option>
+                            <option value="homologation">Homologação</option>
+                            <option value="production">Produção</option>
                           </select>
                         </div>
 
@@ -125,7 +134,7 @@
 
                       <div class="row">
                         <div class="col-8">
-                          <b><?=$mod['name']; ?> - <small><?=$mod['version']; ?></small></b>
+                          <b><?=$mod['name']; ?> <br><small><?=$mod['version']; ?></small></b>
                         </div>
                         <div class="col-4">
                           <div class="dropdown">
