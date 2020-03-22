@@ -20,8 +20,15 @@
 		}
 
 		public function setModule( $module ){
-			$this->module = $module;
-			$this->attrModules = json_decode(file_get_contents(parent::route("path")."/modules/".$this->module."/define.json"));
+			$this->module = parent::route('path')."/modules/".$module;
+			if( file_exists($this->module) and is_dir($this->module) ){
+				$this->module = $module;
+				$this->attrModules = json_decode(file_get_contents(parent::route("path")."/modules/".$this->module."/define.json"));
+			}else{
+				CoreException::moduleNotFound();
+				$this->module = parent::getConfig('default_module');
+			}
+
 			return $this;
 		}
 
@@ -42,6 +49,12 @@
 		}
 
 		public function execute(){
+			# checking init application
+			$security = parent::getSecurity();
+			if( empty($security['console']) ){
+				header("location: " . parent::route("index")."/console?install");
+			}
+
 			# generate uri module
 			if( !parent::uri() ){
 				parent::location("", $this->module);
@@ -63,7 +76,7 @@
 			}else{
 
 				if( parent::getConfig("debug") ){
-					AtomException::moduleNotFound();
+					CoreException::moduleNotFound();
 				}
 			}
 		}

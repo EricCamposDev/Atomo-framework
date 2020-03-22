@@ -1,12 +1,1 @@
-{
-	"project"		: "Atomo - Framework",
-	"folder"		: "/atomo-v2.1",
-	"version"		: "2.1.1",
-	"protocol"		: "http",
-	"default_module": "docs",
-	"debug" 		: false,
-	"dbhost"		: "",
-	"dbname"		: "",
-	"dbuser"		: "",
-	"dbpass"		: ""
-}
+{"project":"fudendo","folder":"\/erp-projeto","version":"1.0.0","protocol":"http","default_module":"docs","debug":true,"dbhost":"","dbname":"","dbuser":"","dbpass":""}

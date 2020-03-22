@@ -13,11 +13,13 @@
 	class Atom {
 
 		private $config;
+		private $security;
 		private $dfserver;
 
 		public function __construct() {
 			# configuration
 			$this->config = json_decode(file_get_contents(dirname(__DIR__)."/config/config.json"));
+			$this->security = json_decode(file_get_contents(dirname(__DIR__)."/config/security.json"), true);
 			$this->dfserver["path"] = $_SERVER["DOCUMENT_ROOT"];
 			$this->dfserver["index"] = $_SERVER["SERVER_NAME"];
 		}
@@ -68,6 +70,52 @@
 
 		}
 
+		public function setConfig($key = null, $value = null){
+			if( $key == null or $value == null ){
+				return false;
+			}else{
+				if( $this->getConfig($key) ){
+					$cf = $this->getConfig();
+					$cf[$key] = $value;
+					file_put_contents($this->route('path')."/core/config/config.json", json_encode($cf));
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+
+		public function getSecurity( $key = null ){
+			$return = (array) $this->security;
+			if( $key != null ){
+				if( isset( $return[$key] ) ){
+					return $return[$key];
+				}else{
+					return false;
+				}
+			}else{
+				return $return;
+			}
+
+		}
+
+		public function setSecurity($key = null, $value = null){
+			if( $key == null or $value == null ){
+				return false;
+			}else{
+				if( $this->getSecurity($key) ){
+					$scrt = $this->getSecurity();
+					$scrt[$key] = $value;
+					file_put_contents($this->route('path')."/core/config/security.json", json_encode($scrt));
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+
+
+
 		public function uri( $key = null ){
 			if( $key == null ){
 				if( isset($_GET['route']) ){
@@ -98,7 +146,7 @@
 			}else{
 				if( $this->config->debug ){
 					# falha ao encontrar arquivo
-					AtomException::fileNotFound();
+					CoreException::fileNotFound();
 				}
 			}
 		}
@@ -109,7 +157,7 @@
 				require $src;
 			}else{
 				if( $this->config->debug ){
-					AtomException::fileNotFound();
+					CoreException::fileNotFound();
 				}
 			}
 		}
@@ -189,7 +237,7 @@
 				require $fileApp;
 			}else{
 				if( $this->config->debug ){
-					AtomException::fileNotFound();
+					CoreException::fileNotFound();
 				}
 			}	
 		}

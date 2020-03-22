@@ -41,7 +41,7 @@
 		public function status(){
 			if( !$this->get_instance() ){
 				if( parent::getConfig("debug") ){
-					AtomException::withoutConnection();
+					CoreException::withoutConnection();
 				}
 			}
 		}

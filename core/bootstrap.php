@@ -16,10 +16,11 @@
 
 	require "src/Atom.php";
 	require "src/Module.php";
+	require "src/Console.php";
 	require "src/Connect.php";
 	require "src/DBSQL.php";
 	require "src/Session.php";
-	require "src/AtomException.php";
+	require "src/CoreException.php";
 	require "src/Helper.php";
 	require "src/Import.php";
 	require "src/Rest.php";
